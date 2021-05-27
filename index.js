@@ -1,5 +1,4 @@
-const { stringify } = require('query-string');
-const express = require('express');
+=const express = require('express');
 const bodyParser = require('body-parser');
 const fetch = require('node-fetch');
 
@@ -45,11 +44,11 @@ function getStatus(build) {
   };
 }
 
-async function setCommitStatus(build, repoId) {
+async function setCommitStatus(build, { repoId, name }) {
   const status = getStatus(build);
 
   const body = JSON.stringify({
-    context: 'UI Tests',
+    context: name ? `UI Tests (${name})` : 'UI Tests',
     target_url: build.webUrl,
     ...status,
   });
@@ -71,14 +70,14 @@ app.use(bodyParser.json());
 
 app.post('/webhook', async (req, res) => {
   const { event, build } = req.body;
-  const { repoId } = req.query;
+  const { repoId, name } = req.query;
 
   if (!repoId) {
     throw new Error('Need a repoId query param on webhook URL');
   }
 
   if (event === 'build-status-changed') {
-    await setCommitStatus(build, repoId);
+    await setCommitStatus(build, { repoId, name });
   }
 
   res.end('OK');
