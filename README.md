@@ -18,7 +18,7 @@ This repository provides a starter example webhook implementation to handle buil
 
     ```shell
     # Clones the repository
-     degit chromaui/github-webhook-proxy github-webhook-proxy
+     degit chromaui/github-webhook-proxy#main github-webhook-proxy
     ```
 
 1.  **Install the dependencies.**
