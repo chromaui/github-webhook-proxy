@@ -78,11 +78,19 @@ Deploy the webhook to the provider that best suits your organization's requireme
 
 ## Connect to Chromatic
 
-Click the "Add webhook" button on your project's manage screen and provide the deployed URL for the webhok. We **recommend** passing in the `repoId` query parameter to ensure we can identify the correct project.
+Click the "Add webhook" button on your project's manage screen and provide the deployed URL for the webhook. Here's an example of what that might look like (assuming you've deployed to Heroku):
 
 ```
-https://webhook.chromatic.com/webhook?repoId=123
+https://arcane-lowlands-8408.herokuapp.com/webhook?repoId=<repoId>
 ```
+
+The example webhook handler requires the `repoId` query parameter to send a commit status update to your GitHub repository. You can find your repository ID by visiting your GitHub repository webpage and running the following in your browser console: 
+
+```
+$("meta[name=octolytics-dimension-repository_id]").getAttribute('content')
+```
+
+It should yield a (large) number.
 
 ### Additional resources
 
